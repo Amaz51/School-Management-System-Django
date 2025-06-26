@@ -304,6 +304,8 @@ class User_update_and_delete_view(APIView):
      except Exception as e:
          return Response({"error":str(e)},status=400)
      
+
+     
   def get(self,request,username):
       try:
         cache_key=f"user_{username}"
