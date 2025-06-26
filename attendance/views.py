@@ -11,7 +11,7 @@ import pandas as pd
 from .models import Attendance
 import logging
 logger = logging.getLogger(__name__)
-
+import logging
 class List_and_Create_View(APIView) :
   def get(self,request):
     records = Attendance.objects.all()
