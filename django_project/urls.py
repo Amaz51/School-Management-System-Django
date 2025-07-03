@@ -10,10 +10,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/attendance/', include('attendance.urls')), 
     path('api/students/', include('students.urls')),
+    path('api/ordering/', include('studentorder.urls')),
     # path('api/courses',include('courses.urls')),
     # path('api/classes',include('classes.urls')),
     # JWT endpoints
-    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
-

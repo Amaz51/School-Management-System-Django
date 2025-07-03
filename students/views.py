@@ -12,13 +12,35 @@ from django.http import JsonResponse
 from django.db import connection
 from django.http import HttpResponse
 import logging
+from students.tasks import send_welcome_email ,send_welcome
+from students.tasks import task_a, task_b, task_c
+from celery import chain
+from math import ceil
+from django.core.cache import cache
+import json
 # from django.core.paginator import Paginator
 logger = logging.getLogger(__name__)
+
 
 @ensure_csrf_cookie
 def csrf_token_view(request):
     return JsonResponse({"detail": "CSRF cookie set"})
 
+
+class ReorderStudentsView(APIView):
+    def post(self, request):
+        try:
+            for dataa in request.data:
+                student_id = dataa.get('student_id')
+                new_order = dataa.get('order')
+
+                if student_id is not None and new_order is not None:
+                    Student.objects.filter(student_id=student_id).update(order=new_order)
+
+            return Response({"message": "Student order updated!"}, status=200)
+        
+        except Exception as e:
+            return Response({"error": str(e)}, status=400)
 
 #Queries
 # Select s.student_id,s.email,s.name FROM student AS s WHERE s.email IN ('xyz@gmail.com','abcd@gmail.com');
@@ -160,29 +182,41 @@ def show_student_names(request):
     return HttpResponse("Executed 5 queries")
 
 
-class RegisterView(APIView):
-  def post(self, request):
-    username = request.data.get('username')
-    password = request.data.get('password')
-    if not username or not password:
-      logger.error("Check credentials.")
-      return Response({"error": "Username and password are required."}, status=400)
-    if len(password) < 8:
-      return Response({"error": "Password must be at least 8 characters long."}, status=400)
+# class RegisterView(APIView):
+#   def post(self, request):
+#     username = request.data.get('username')
+#     password = request.data.get('password')
+#     email= request.data.get('email')
+#     if not username or not password or not email:
+#       logger.error("Check credentials.")
+#       return Response({"error": "Username,email and password are required."}, status=400)
+#     if len(password) < 8:
+#       return Response({"error": "Password must be at least 8 characters long."}, status=400)
     
-    if User.objects.filter(username=username).exists():
-      logger.error("User Already Exists.")
-      return Response("Error : username already exists",status=400)
+#     if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+#       logger.error("User Already Exists.Use unique username and email")
+#       return Response("Error : username or email already exists",status=400)
     
-    user=User.objects.create_user(username=username,password=password)
-    login(request,user)
-    logger.info(f"User {user} Registered successfully.")
-    return Response("Congrats, you are registered and logged in.",status=200)
+#     user=User.objects.create_user(username=username,password=password,email=email)
+#     send_welcome_email.delay("Amaz Ahmed", "amaz@gmail.com")
+#     login(request,user)
+#     logger.info(f"User {user} Registered successfully.")
+#     return Response("Congrats, you are registered and logged in.",status=200)
+
+def test_celery(request):
+    send_welcome_email.delay("Amaz Ahmed", "amaz@gmail.com")
+    send_welcome.delay("fahad","abcd@gmail.com")
+    return JsonResponse({"message": "Task triggered!"})
 
 
-from math import ceil
-from django.core.cache import cache
-import json
+def test_chain(request):
+    result = chain(
+        task_a.s(5),     
+        task_b.s(),      
+        task_c.s()       
+    )()
+    return Response("reponse is ",result)
+
 class BulkCreateUsers(APIView):
     def post(self, request):
         try:
@@ -251,19 +285,20 @@ class BulkCreateUsers(APIView):
 
  
         
-
-class LoginView(APIView):
-  def post(self,request):
-    username=request.data.get("username")
-    password=request.data.get("password")
-
-    user=authenticate(request,username=username,password=password)
-    if user is None:
-      logger.error("User not authenticated. Check credentials.")
-      return Response("User not authenticated, please check credentials",status=400)
-    login(request,user)
-    logger.info(f"User {user} logged in successfully.")
-    return Response("Congrats, you logged in.",status=200)
+# @csrf_exempt
+# class LoginView(APIView):
+#   def post(self,request):
+#     username=request.data.get("username")
+#     password=request.data.get("password")
+#    #  email=request.data.get("email")
+#     user=authenticate(request,username=username,password=password)
+#     if user is None:
+#       logger.error("User not authenticated. Check credentials.")
+#       return Response("User not authenticated, please check credentials",status=400)
+#     login(request,user)
+#    #  send_welcome_email.delay("Amaz Ahmed", "amaz@gmail.com")
+#     logger.info(f"User {user} logged in successfully.")
+#     return Response("Congrats, you logged in.",status=200)
   
 
 class User_update_and_delete_view(APIView):
@@ -305,7 +340,7 @@ class User_update_and_delete_view(APIView):
          return Response({"error":str(e)},status=400)
      
 
-     
+
   def get(self,request,username):
       try:
         cache_key=f"user_{username}"

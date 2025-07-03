@@ -10,6 +10,30 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),   
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),      
+}
+
+from decouple import config
+
+SECRET_KEY = config('DJANGO_SECRET_KEY')
+DEBUG = config('DJANGO_DEBUG', cast=bool)
+ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS').split(',')
+
+# Mailgun
+MAILGUN_API_KEY = config('MAILGUN_API_KEY')
+MAILGUN_DOMAIN = config('MAILGUN_DOMAIN')
+MAILGUN_FROM_EMAIL = config('MAILGUN_FROM_EMAIL')
+
+# Celery
+CELERY_BROKER_URL = config('CELERY_BROKER_URL')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
 import os
 from pathlib import Path
 
@@ -42,8 +66,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework_simplejwt',
     'attendance',
     'students',
+    'studentorder',
     'classes',
     'courses',
     'corsheaders',
@@ -182,6 +208,9 @@ CACHES = {
         }
     }
 }
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
 
 
 
