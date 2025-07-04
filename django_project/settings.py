@@ -57,7 +57,6 @@ CSRF_TRUSTED_ORIGINS = [
     "https://72155782-c5da-4610-8031-98f988087782-00-12uat73q27479.sisko.replit.dev:8000/api/attendance"
 ]
 
-# Application definition
 AUTH_USER_MODEL = 'role.CustomUser'
 
 INSTALLED_APPS = [

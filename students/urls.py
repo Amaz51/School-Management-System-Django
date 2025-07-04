@@ -5,7 +5,7 @@ urlpatterns = [
     path('<int:id>/',views.StudentDeleteView.as_view(),name="Delete_view"), 
     # path('register',views.RegisterView.as_view(),name='Register_view'),
     # path('login',views.LoginView.as_view(),name='login_view'),
-    path('csrf/', views.csrf_token_view),
+    # path('csrf/', views.csrf_token_view),
     path('list/', views.show_student_names, name='show-students'),
     path('student/by-email/', views.StudentByEmailView.as_view(), name='student_by_email'),
     path('bulkcreateusers/',views.BulkCreateUsers.as_view(),name='bulkcreateusers'),
