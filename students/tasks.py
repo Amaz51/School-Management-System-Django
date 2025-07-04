@@ -13,7 +13,7 @@ def send_welcome_email(username, email):
 def send_welcome(username, email):
     print(f"\nStarting to process for: {username} ({email})")
     time.sleep(13)  
-    print(f"\sent successfully to {email}!")
+    print(f"\nsent successfully to {email}!")
     return f"\nWelcome sent to {username}"
 
 

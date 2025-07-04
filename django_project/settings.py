@@ -58,6 +58,7 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 # Application definition
+AUTH_USER_MODEL = 'role.CustomUser'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -70,6 +71,7 @@ INSTALLED_APPS = [
     'attendance',
     'students',
     'studentorder',
+    'role',
     'classes',
     'courses',
     'corsheaders',
@@ -142,12 +144,22 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'schooldb',
+#         'USER': 'amaz',
+#         'PASSWORD': 'heyschool',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'schooldb',
-        'USER': 'amaz',
-        'PASSWORD': 'heyschool',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'Asdfghjkl0.@',
         'HOST': 'localhost',
         'PORT': '5432',
     }

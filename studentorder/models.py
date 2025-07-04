@@ -1,9 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
 from students.models import Student 
-
+from django.conf import settings
 class StudentOrder(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     order = models.PositiveIntegerField()
 

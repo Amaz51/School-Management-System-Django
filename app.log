@@ -9712,3 +9712,17 @@ INFO 2025-07-03 19:33:41,600 django.server "GET /api/attendance/ HTTP/1.1" 200 1
 INFO 2025-07-03 19:33:41,685 django.server "GET /api/attendance/ HTTP/1.1" 200 1119
 INFO 2025-07-03 19:33:41,773 django.server "GET /api/attendance/ HTTP/1.1" 200 1119
 INFO 2025-07-03 19:33:41,849 django.server "GET /api/attendance/ HTTP/1.1" 200 1119
+INFO 2025-07-03 20:58:15,022 django.utils.autoreload D:\djangopro\schoolcrud\schoolcrud\backend\students\models.py changed, reloading.
+INFO 2025-07-03 20:58:17,923 django.utils.autoreload Watching for file changes with StatReloader
+INFO 2025-07-03 20:58:33,109 django.utils.autoreload D:\djangopro\schoolcrud\schoolcrud\backend\students\models.py changed, reloading.
+INFO 2025-07-03 20:58:34,405 django.utils.autoreload Watching for file changes with StatReloader
+INFO 2025-07-03 20:58:53,076 django.utils.autoreload D:\djangopro\schoolcrud\schoolcrud\backend\django_project\settings.py changed, reloading.
+INFO 2025-07-03 20:58:54,516 django.utils.autoreload Watching for file changes with StatReloader
+INFO 2025-07-03 20:59:34,387 django.utils.autoreload D:\djangopro\schoolcrud\schoolcrud\backend\django_project\settings.py changed, reloading.
+INFO 2025-07-03 20:59:36,390 django.utils.autoreload Watching for file changes with StatReloader
+INFO 2025-07-03 21:04:08,259 django.utils.autoreload D:\djangopro\schoolcrud\schoolcrud\backend\studentorder\models.py changed, reloading.
+INFO 2025-07-03 21:04:10,082 django.utils.autoreload Watching for file changes with StatReloader
+INFO 2025-07-03 21:04:29,725 django.utils.autoreload D:\djangopro\schoolcrud\schoolcrud\backend\studentorder\models.py changed, reloading.
+INFO 2025-07-03 21:04:32,076 django.utils.autoreload Watching for file changes with StatReloader
+INFO 2025-07-03 21:10:37,030 django.utils.autoreload D:\djangopro\schoolcrud\schoolcrud\backend\students\tasks.py changed, reloading.
+INFO 2025-07-03 21:10:38,808 django.utils.autoreload Watching for file changes with StatReloader
